@@ -1,20 +1,29 @@
 /* --- Academic Documentation Stylesheet --- */
+
+/* 1. Reset & Viewport Fix */
+* {
+    box-sizing: border-box; /* Crucial: Prevents padding from breaking the screen width */
+}
+
 body {
     background-color: #1a202c; /* Slate Navy */
     font-family: "Times New Roman", Times, serif;
     color: #000;
     margin: 0;
-    padding: 40px 10px;
-    line-height: 1.3;
+    padding: 20px 0; /* Reduced top/bottom padding for mobile */
+    line-height: 1.4;
 }
 
+/* 2. Responsive Paper Container */
 .page-container {
-    max-width: 850px;
+    width: 95%;           /* Essential for mobile */
+    max-width: 850px;     /* Desktop constraint */
     margin: 0 auto;
     background-color: #fff; /* The White Paper */
-    padding: 50px 60px;
+    padding: 30px 20px;   /* Dynamic padding */
     border: 1px solid #000;
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    word-wrap: break-word; /* Prevents long text from overflowing */
 }
 
 /* Navigation */
@@ -22,12 +31,14 @@ nav {
     margin-bottom: 30px;
     border-bottom: 2px solid #000;
     padding-bottom: 8px;
+    display: flex;
+    flex-wrap: wrap;      /* Wraps links if they don't fit */
+    gap: 10px;
 }
 
 nav a {
     color: #000;
     text-decoration: underline;
-    margin-right: 20px;
     font-weight: bold;
     font-size: 15px;
 }
@@ -35,17 +46,22 @@ nav a {
 /* Header & Profile */
 header {
     display: flex;
+    flex-direction: row;  /* Side by side on Desktop */
     justify-content: space-between;
     align-items: flex-start;
     margin-bottom: 25px;
+    gap: 20px;
 }
 
-.details-left { flex: 1; padding-right: 30px; }
+.details-left { 
+    flex: 1; 
+}
 
 .details-left h1 {
-    font-size: 34px;
+    font-size: clamp(24px, 5vw, 34px); /* Scales font size based on screen width */
     margin: 0 0 10px 0;
     text-transform: uppercase;
+    line-height: 1.1;
 }
 
 .info-item { font-size: 16px; margin-bottom: 4px; }
@@ -55,6 +71,7 @@ header {
     padding: 8px 0;
     border-top: 1px dotted #000;
     font-style: italic;
+    word-break: break-all; /* Keeps long emails from breaking the layout */
 }
 
 .summary-text {
@@ -112,22 +129,54 @@ footer {
 }
 
 .btn {
-    padding: 3px 10px;
+    padding: 5px 10px;
     border: 1px solid #000;
     text-decoration: none;
     color: #000;
     font-size: 13px;
     background: #fff;
+    display: inline-block;
 }
 
 .btn:hover { background: #000; color: #fff; }
 
-/* Note Specifics */
-.note-header { display: flex; justify-content: space-between; align-items: baseline; }
-.math-block { background: #f4f4f4; padding: 15px; border-left: 3px solid #000; margin: 20px 0; }
+/* Note Specifics & Math */
+.math-block { 
+    background: #f4f4f4; 
+    padding: 15px; 
+    border-left: 3px solid #000; 
+    margin: 20px 0; 
+    overflow-x: auto; /* Allows horizontal scroll for long equations without breaking site */
+}
 
+/* --- MOBILE SPECIFIC OVERRIDES --- */
 @media (max-width: 700px) {
-    header { flex-direction: column-reverse; }
-    .profile-photo { width: 100%; margin: 0 0 20px 0; }
-    .foundations-grid { grid-template-columns: 1fr; }
+    .page-container {
+        padding: 30px 15px; /* Thinner margins on phone */
+    }
+
+    header { 
+        flex-direction: column-reverse; /* Photo moves to top on mobile */
+        align-items: center;
+        text-align: center;
+    }
+
+    .details-left {
+        padding-right: 0;
+        width: 100%;
+    }
+
+    .profile-photo { 
+        width: 100%; 
+        max-width: 300px; /* Prevents photo from getting too huge on tablets */
+        margin: 0 0 20px 0; 
+    }
+
+    .foundations-grid { 
+        grid-template-columns: 1fr; /* Stacks categories vertically */
+    }
+
+    .contact-info {
+        text-align: center;
+    }
 }

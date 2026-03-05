@@ -70,6 +70,7 @@ header {
     margin-top: 10px;
     padding: 8px 0;
     border-top: 1px dotted #000;
+    border-bottom: 1px dotted #000;
     font-style: italic;
     word-break: break-all; /* Keeps long emails from breaking the layout */
 }

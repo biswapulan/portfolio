@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOPIC NAME | Academic Notes</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <div class="page-container">
+
+        <!-- PASTE AI CONTENT BELOW THIS LINE -->
+    <nav><a href="../../notes.html">← Back to Notes</a></nav>
+
+    <h1>Probability Axioms & Sample Space</h1>
+
+    <h2>1. The Sample Space (\(\Omega\))</h2>
+    <p>The Sample Space is the set of all possible outcomes of a random experiment. In rigorous probability theory, the nature of this set dictates the mathematical tools required for analysis.</p>
+    
+    <h3>Types of Sample Spaces</h3>
+    <ul>
+        <li><strong>Discrete Sample Spaces:</strong> These contain a finite or countably infinite number of outcomes. Examples include rolling a die or counting the number of radioactive decays in a fixed interval.</li>
+        <li><strong>Continuous Sample Spaces:</strong> These contain an uncountably infinite number of outcomes, typically representing measurements on a continuum such as time, distance, or mass.</li>
+    </ul>
+
+    <table class="notes-table">
+        <thead>
+            <tr>
+                <th>Term</th>
+                <th>Definition</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Outcome</td>
+                <td>A single specific result of an experiment (\(\omega \in \Omega\)).</td>
+            </tr>
+            <tr>
+                <td>Event</td>
+                <td>A subset of the sample space (\(A \subseteq \Omega\)).</td>
+            </tr>
+            <tr>
+                <td>Power Set</td>
+                <td>The collection of all possible events. For a finite \(\Omega\) of size \(n\), there are \(2^n\) events.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>2. The Algebra of Events</h2>
+    <p>Events are manipulated using set-theoretic operations. Let \(A\) and \(B\) be events in \(\Omega\):</p>
+    <ul>
+        <li><strong>Union (\(A \cup B\)):</strong> The event that \(A\) occurs, or \(B\) occurs, or both occur.</li>
+        <li><strong>Intersection (\(A \cap B\)):</strong> The event that both \(A\) and \(B\) occur simultaneously.</li>
+        <li><strong>Complement (\(A^c\)):</strong> The event that \(A\) does not occur.</li>
+        <li><strong>Mutually Exclusive:</strong> Events are disjoint if their intersection is the empty set, \(A \cap B = \emptyset\).</li>
+    </ul>
+
+    <h2>3. Kolmogorov’s Axioms of Probability</h2>
+    <p>Modern probability theory is built upon three fundamental axioms proposed by Andrey Kolmogorov in 1933. Any valid probability measure \(P\) must satisfy these conditions.</p>
+
+    <h3>Axiom I: Non-negativity</h3>
+    <p>For any event \(A\), the probability is a non-negative real number:</p>
+    <div class="math-block">
+        $$P(A) \geq 0$$
+    </div>
+
+    <h3>Axiom II: Normalization</h3>
+    <p>The probability of the entire sample space is exactly 1, representing certainty:</p>
+    <div class="math-block">
+        $$P(\Omega) = 1$$
+    </div>
+
+    <h3>Axiom III: Countable Additivity</h3>
+    <p>For any sequence of mutually exclusive events \(A_1, A_2, A_3, \dots\), the probability of their union is the sum of their individual probabilities:</p>
+    <div class="math-block">
+        $$P\left(\bigcup_{i=1}^{\infty} A_i\right) = \sum_{i=1}^{\infty} P(A_i)$$
+    </div>
+
+    <h2>4. Derived Mathematical Properties</h2>
+    <p>From the fundamental axioms, several critical theorems are derived for calculation:</p>
+    <ol>
+        <li><strong>Impossible Event:</strong> \(P(\emptyset) = 0\)</li>
+        <li><strong>Complement Rule:</strong> \(P(A^c) = 1 - P(A)\)</li>
+        <li><strong>Monotonicity:</strong> If \(A \subseteq B\), then \(P(A) \leq P(B)\)</li>
+        <li><strong>Inclusion-Exclusion Principle:</strong> For any two events \(A\) and \(B\):
+            <div class="math-block">
+                $$P(A \cup B) = P(A) + P(B) - P(A \cap B)$$
+            </div>
+        </li>
+    </ol>
+
+    <h2>5. Advanced Concept: Sigma-Algebras (\(\mathcal{F}\))</h2>
+    <p>In advanced measure-theoretic probability, we define a probability space as a triplet \((\Omega, \mathcal{F}, P)\). The \(\sigma\)-algebra \(\mathcal{F}\) is a collection of subsets of \(\Omega\) that is closed under complements and countable unions. This structure ensures that probabilities can be consistently assigned to complex sets without logical contradiction.</p>
+
+    <h2>6. Advanced Challenge Questions</h2>
+
+    <h3>Question 1: The Limits of Additivity</h3>
+    <p>Suppose you have a sample space \(\Omega = \{1, 2, 3, \dots\}\) (the set of all positive integers). Is it possible to define a probability measure \(P\) such that every individual outcome has the same probability \(p > 0\)? Justify your answer using the Axioms.</p>
+
+    <h3>Question 2: Geometric Probability</h3>
+    <p>Three points \(X, Y,\) and \(Z\) are chosen independently and uniformly at random on the circumference of a circle. What is the probability that the center of the circle lies inside the triangle formed by these three points?</p>
+
+    <h3>Question 3: Proving Monotonicity</h3>
+    <p>Using only the three Kolmogorov Axioms, prove the property of monotonicity: if \(A \subseteq B\), then \(P(A) \leq P(B)\). <em>Hint: Express \(B\) as a union of two disjoint sets involving \(A\).</em></p>
+
+</div>
+
+```
+
+        <!-- PASTE AI CONTENT ABOVE THIS LINE -->
+
+    </div>
+</body>
+</html>

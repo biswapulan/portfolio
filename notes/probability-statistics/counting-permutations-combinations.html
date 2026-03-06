@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Counting: Permutations & Combinations | Academic Notes</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+    <div class="page-container">
+
+        <nav><a href="../../notes.html">← Back to Notes</a></nav>
+
+        <h1>Counting: Permutations & Combinations</h1>
+
+        <h2>1. The Fundamental Principles</h2>
+        <p>Combinatorics is the study of counting, grouping, and arrangement. In the context of competitive examinations like GATE, the focus is on visualizing the selection process rather than just applying formulas.</p>
+        <ul>
+            <li><strong>Rule of Sum (OR):</strong> If task A can be done in \(m\) ways and task B in \(n\) ways, and they are mutually exclusive, then A or B can be done in \(m + n\) ways.</li>
+            <li><strong>Rule of Product (AND):</strong> If task A can be done in \(m\) ways and task B in \(n\) ways independently, then the sequence A followed by B can be done in \(m \times n\) ways.</li>
+        </ul>
+
+        <h2>2. Permutations (P): Order Matters</h2>
+        <p>Permutations are used when the arrangement of items is significant, such as in seating arrangements or word formation.</p>
+
+        <h3>Standard Linear Permutation</h3>
+        <p>Arranging \(r\) items from a set of \(n\) distinct items:</p>
+        <div class="math-block">
+            $$P(n, r) = \frac{n!}{(n-r)!}$$
+        </div>
+
+        <h3>Permutations with Repetition</h3>
+        <p>If you have \(n\) items where \(n_1\) are of type 1, \(n_2\) are of type 2, and so on:</p>
+        <div class="math-block">
+            $$\text{Total Arrangements} = \frac{n!}{n_1! \cdot n_2! \dots n_k!}$$
+        </div>
+
+        <h3>Circular Permutations</h3>
+        <p>Arranging \(n\) distinct items around a circle:</p>
+        <ul>
+            <li>Fixed orientation: \((n-1)!\)</li>
+            <li>No orientation (e.g., beads on a necklace): \(\frac{(n-1)!}{2}\)</li>
+        </ul>
+
+        <h2>3. Combinations (C): Order Irrelevant</h2>
+        <p>Combinations are used when the goal is to select a subset without regard to the sequence of selection.</p>
+
+        <h3>Basic Selection</h3>
+        <div class="math-block">
+            $$C(n, r) = \binom{n}{r} = \frac{n!}{r!(n-r)!}$$
+        </div>
+
+        <h3>Combinations with Repetition (Stars and Bars)</h3>
+        <p>Selecting \(r\) items from \(n\) types where repetition is allowed (or distributing \(r\) identical items into \(n\) distinct bins):</p>
+        <div class="math-block">
+            $$\text{Ways} = \binom{n + r - 1}{r}$$
+        </div>
+
+        <h2>4. Advanced Concepts for GATE</h2>
+        <h3>Inclusion-Exclusion Principle</h3>
+        <p>To find the size of the union of multiple sets:</p>
+        <div class="math-block">
+            $$|A \cup B \cup C| = |A| + |B| + |C| - (|A \cap B| + |A \cap C| + |B \cap C|) + |A \cap B \cap C|$$.
+        </div>
+
+        <h3>Derangements</h3>
+        <p>The number of ways to arrange \(n\) items such that none are in their original position:</p>
+        <div class="math-block">
+            $$D_n = n! \left[ 1 - \frac{1}{1!} + \frac{1}{2!} - \frac{1}{3!} + \dots + (-1)^n \frac{1}{n!} \right]$$
+        </div>
+
+        <h2>5. Summary Table</h2>
+        <table class="notes-table">
+            <thead>
+                <tr>
+                    <th>Scenario</th>
+                    <th>Order Matters?</th>
+                    <th>Repetition?</th>
+                    <th>Formula</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Permutation</td>
+                    <td>Yes</td>
+                    <td>No</td>
+                    <td>\(P(n, r)\)</td>
+                </tr>
+                <tr>
+                    <td>Combination</td>
+                    <td>No</td>
+                    <td>No</td>
+                    <td>\(C(n, r)\)</td>
+                </tr>
+                <tr>
+                    <td>Multiset Permutation</td>
+                    <td>Yes</td>
+                    <td>Yes (Identical)</td>
+                    <td>\(\frac{n!}{n_1!n_2!...}\)</td>
+                </tr>
+                <tr>
+                    <td>Multiset Selection</td>
+                    <td>No</td>
+                    <td>Yes</td>
+                    <td>\(\binom{n+r-1}{r}\)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>6. Tough Example Problems</h2>
+        <h3>Problem 1: The Constraints Challenge</h3>
+        <p>How many 5-digit numbers can be formed using digits \(\{0, 1, 2, 3, 4, 5\}\) such that the number is divisible by 3 and repetition is not allowed?</p>
+        <p><strong>Solution:</strong> The sum of digits must be a multiple of 3. We analyze two sets of 5 digits:</p>
+        <ul>
+            <li>Set 1: \(\{1, 2, 3, 4, 5\}\) (Sum = 15). Arrangements: \(5! = 120\).</li>
+            <li>Set 2: \(\{0, 1, 2, 4, 5\}\) (Sum = 12). Arrangements: \(5! - 4!\) (excluding leading zero) = 96.</li>
+        </ul>
+        <p>Total: \(120 + 96 = 216\).</p>
+
+        <h3>Problem 2: Stars and Bars with Bounds</h3>
+        <p>Find the number of integer solutions to \(x_1 + x_2 + x_3 = 15\), where \(x_1 \ge 1, x_2 \ge 2, x_3 \ge 0\).</p>
+        <p><strong>Solution:</strong> Normalize variables to \(\ge 0\):</p>
+        <ul>
+            <li>Let \(y_1 = x_1 - 1, y_2 = x_2 - 2, y_3 = x_3\).</li>
+            <li>Equation: \((y_1 + 1) + (y_2 + 2) + y_3 = 15 \implies y_1 + y_2 + y_3 = 12\).</li>
+        </ul>
+        <div class="math-block">
+            $$\binom{3 + 12 - 1}{12} = \binom{14}{2} = 91$$
+        </div>
+
+    </div>
+</body>
+</html>

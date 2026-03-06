@@ -2,28 +2,28 @@
 
 /* 1. Reset & Viewport Fix */
 * {
-    box-sizing: border-box; /* Crucial: Prevents padding from breaking the screen width */
+    box-sizing: border-box;
 }
 
 body {
-    background-color: #1a202c; /* Slate Navy */
+    background-color: #1a202c;
     font-family: "Times New Roman", Times, serif;
     color: #000;
     margin: 0;
-    padding: 20px 0; /* Reduced top/bottom padding for mobile */
+    padding: 20px 0;
     line-height: 1.4;
 }
 
 /* 2. Responsive Paper Container */
 .page-container {
-    width: 95%;           /* Essential for mobile */
-    max-width: 850px;     /* Desktop constraint */
+    width: 95%;
+    max-width: 850px;
     margin: 0 auto;
-    background-color: #fff; /* The White Paper */
-    padding: 30px 20px;   /* Dynamic padding */
+    background-color: #fff;
+    padding: 30px 20px;
     border: 1px solid #000;
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    word-wrap: break-word; /* Prevents long text from overflowing */
+    word-wrap: break-word;
 }
 
 /* Navigation */
@@ -32,7 +32,7 @@ nav {
     border-bottom: 2px solid #000;
     padding-bottom: 8px;
     display: flex;
-    flex-wrap: wrap;      /* Wraps links if they don't fit */
+    flex-wrap: wrap;
     gap: 10px;
 }
 
@@ -46,7 +46,7 @@ nav a {
 /* Header & Profile */
 header {
     display: flex;
-    flex-direction: row;  /* Side by side on Desktop */
+    flex-direction: row;
     justify-content: space-between;
     align-items: flex-start;
     margin-bottom: 25px;
@@ -58,7 +58,7 @@ header {
 }
 
 .details-left h1 {
-    font-size: clamp(24px, 5vw, 34px); /* Scales font size based on screen width */
+    font-size: clamp(24px, 5vw, 34px);
     margin: 0 0 10px 0;
     text-transform: uppercase;
     line-height: 1.1;
@@ -72,7 +72,7 @@ header {
     border-top: 1px dotted #000;
     border-bottom: 1px dotted #000;
     font-style: italic;
-    word-break: break-all; /* Keeps long emails from breaking the layout */
+    word-break: break-all;
 }
 
 .summary-text {
@@ -147,17 +147,100 @@ footer {
     padding: 15px; 
     border-left: 3px solid #000; 
     margin: 20px 0; 
-    overflow-x: auto; /* Allows horizontal scroll for long equations without breaking site */
+    overflow-x: auto;
+}
+
+/* =============================================
+   Search Bar
+   ============================================= */
+.search-wrapper {
+    position: relative;
+    margin: 0 0 25px 0;
+}
+
+.notes-search {
+    width: 100%;
+    padding: 7px 32px 7px 10px;
+    border: 1px solid #000;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 15px;
+    background: #fff;
+    color: #000;
+    outline: none;
+}
+
+.notes-search::placeholder {
+    color: #888;
+    font-style: italic;
+}
+
+.notes-search:focus {
+    border-width: 2px;
+}
+
+.search-clear {
+    position: absolute;
+    right: 9px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 13px;
+    cursor: pointer;
+    color: #555;
+    display: none;
+    user-select: none;
+}
+
+.search-clear:hover {
+    color: #000;
+}
+
+/* No results message */
+.no-results {
+    font-style: italic;
+    font-size: 15px;
+    color: #555;
+    margin: 0 0 20px 0;
+}
+
+/* Search highlight on matching links */
+a.search-highlight {
+    background: #f0f0a8;
+    padding: 1px 2px;
+}
+
+/* =============================================
+   Per-Category Show More / Show Less
+   ============================================= */
+.subtopic-hidden {
+    display: none;
+}
+
+.btn-show-more {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 3px 10px;
+    border: 1px solid #000;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 13px;
+    background: #fff;
+    color: #000;
+    cursor: pointer;
+    letter-spacing: 0.3px;
+}
+
+.btn-show-more:hover {
+    background: #000;
+    color: #fff;
 }
 
 /* --- MOBILE SPECIFIC OVERRIDES --- */
 @media (max-width: 700px) {
     .page-container {
-        padding: 30px 15px; /* Thinner margins on phone */
+        padding: 30px 15px;
     }
 
     header { 
-        flex-direction: column-reverse; /* Photo moves to top on mobile */
+        flex-direction: column-reverse;
         align-items: center;
         text-align: center;
     }
@@ -169,12 +252,12 @@ footer {
 
     .profile-photo { 
         width: 100%; 
-        max-width: 300px; /* Prevents photo from getting too huge on tablets */
+        max-width: 300px;
         margin: 0 0 20px 0; 
     }
 
     .foundations-grid { 
-        grid-template-columns: 1fr; /* Stacks categories vertically */
+        grid-template-columns: 1fr;
     }
 
     .contact-info {

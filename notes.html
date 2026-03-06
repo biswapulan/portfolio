@@ -10,23 +10,172 @@
     <div class="page-container">
         <nav><a href="index.html">← Back Home</a></nav>
         <h2>Technical Foundations</h2>
-        
-        <div class="foundations-grid">
-            <div class="foundation-category">
-                <h3>01. Mathematics</h3>
-                <ul class="foundation-links">
-                    <li><a href="notes/linear-algebra.html">SVD & Eigen-Decomposition</a></li>
-                    <li><a href="notes/calculus.html">Backpropagation Math</a></li>
-                </ul>
-            </div>
-            <div class="foundation-category">
-                <h3>02. Algorithms</h3>
-                <ul class="foundation-links">
-                    <li><a href="notes/svm.html">SVM: Kernel Intuition</a></li>
-                    <li><a href="notes/trees.html">Decision Tree Logic</a></li>
-                </ul>
-            </div>
+
+        <div class="search-wrapper">
+            <input type="text" id="notesSearch" class="notes-search" placeholder="Search topics or subtopics...">
+            <span class="search-clear" id="searchClear">✕</span>
         </div>
+
+        <p id="noResults" class="no-results" style="display:none;">No matching topics found.</p>
+
+        <div class="foundations-grid" id="foundationsGrid">
+
+            <!-- 01. Probability and Statistics -->
+            <div class="foundation-category" data-category>
+                <h3>01. Probability and Statistics</h3>
+                <ul class="foundation-links">
+                    <li><a href="notes/probability-statistics/counting-permutations-combinations.html">Counting: Permutations & Combinations</a></li>
+                    <li><a href="notes/probability-statistics/probability-axioms-sample-space.html">Probability Axioms & Sample Space</a></li>
+                    <li><a href="notes/probability-statistics/events-independent-mutually-exclusive.html">Events: Independent & Mutually Exclusive</a></li>
+                    <li><a href="notes/probability-statistics/marginal-conditional-joint-probability.html">Marginal, Conditional & Joint Probability</a></li>
+                    <li><a href="notes/probability-statistics/bayes-theorem.html">Bayes Theorem</a></li>
+                    <li><a href="notes/probability-statistics/conditional-expectation-variance.html">Conditional Expectation & Variance</a></li>
+                    <li><a href="notes/probability-statistics/mean-median-mode-std.html">Mean, Median, Mode & Standard Deviation</a></li>
+                    <li><a href="notes/probability-statistics/correlation-covariance.html">Correlation & Covariance</a></li>
+                    <li><a href="notes/probability-statistics/random-variables-pmf.html">Random Variables & Probability Mass Functions</a></li>
+                    <li><a href="notes/probability-statistics/discrete-distributions.html">Uniform, Bernoulli & Binomial Distribution</a></li>
+                    <li><a href="notes/probability-statistics/continuous-distributions.html">Continuous: Uniform, Exponential, Poisson, Normal</a></li>
+                    <li><a href="notes/probability-statistics/t-chi-squared-distributions.html">t-Distribution & Chi-Squared Distribution</a></li>
+                    <li><a href="notes/probability-statistics/cdf-conditional-pdf.html">CDF & Conditional PDF</a></li>
+                    <li><a href="notes/probability-statistics/central-limit-theorem.html">Central Limit Theorem</a></li>
+                    <li><a href="notes/probability-statistics/confidence-interval.html">Confidence Interval</a></li>
+                    <li><a href="notes/probability-statistics/z-test-t-test-chi-squared-test.html">z-test, t-test & Chi-Squared Test</a></li>
+                </ul>
+            </div>
+
+            <!-- 02. Linear Algebra -->
+            <div class="foundation-category" data-category>
+                <h3>02. Linear Algebra</h3>
+                <ul class="foundation-links">
+                    <li><a href="notes/linear-algebra/vector-space-subspaces.html">Vector Space & Subspaces</a></li>
+                    <li><a href="notes/linear-algebra/linear-dependence-independence.html">Linear Dependence & Independence</a></li>
+                    <li><a href="notes/linear-algebra/matrices-properties.html">Matrices & Their Properties</a></li>
+                    <li><a href="notes/linear-algebra/projection-orthogonal-idempotent-matrix.html">Projection, Orthogonal & Idempotent Matrix</a></li>
+                    <li><a href="notes/linear-algebra/partition-matrix-quadratic-forms.html">Partition Matrix & Quadratic Forms</a></li>
+                    <li><a href="notes/linear-algebra/systems-linear-equations-gaussian.html">Systems of Linear Equations & Gaussian Elimination</a></li>
+                    <li><a href="notes/linear-algebra/eigenvalues-eigenvectors.html">Eigenvalues & Eigenvectors</a></li>
+                    <li><a href="notes/linear-algebra/determinant-rank-nullity.html">Determinant, Rank & Nullity</a></li>
+                    <li><a href="notes/linear-algebra/projections.html">Projections</a></li>
+                    <li><a href="notes/linear-algebra/lu-decomposition.html">LU Decomposition</a></li>
+                    <li><a href="notes/linear-algebra/svd-eigen-decomposition.html">Singular Value Decomposition (SVD)</a></li>
+                </ul>
+            </div>
+
+            <!-- 03. Calculus and Optimization -->
+            <div class="foundation-category" data-category>
+                <h3>03. Calculus and Optimization</h3>
+                <ul class="foundation-links">
+                    <li><a href="notes/calculus/functions-single-variable.html">Functions of a Single Variable</a></li>
+                    <li><a href="notes/calculus/limit-continuity-differentiability.html">Limit, Continuity & Differentiability</a></li>
+                    <li><a href="notes/calculus/taylor-series.html">Taylor Series</a></li>
+                    <li><a href="notes/calculus/maxima-minima.html">Maxima & Minima</a></li>
+                    <li><a href="notes/calculus/optimization-single-variable.html">Optimization: Single Variable</a></li>
+                </ul>
+            </div>
+
+            <!-- 04. Database Management -->
+            <div class="foundation-category" data-category>
+                <h3>04. Database Management & Warehousing</h3>
+                <ul class="foundation-links">
+                    <li><a href="notes/database-management/er-model.html">ER Model</a></li>
+                    <li><a href="notes/database-management/relational-model-algebra-calculus.html">Relational Model, Algebra & Tuple Calculus</a></li>
+                    <li><a href="notes/database-management/sql.html">SQL</a></li>
+                    <li><a href="notes/database-management/integrity-constraints-normal-form.html">Integrity Constraints & Normal Form</a></li>
+                    <li><a href="notes/database-management/file-organization-indexing.html">File Organization & Indexing</a></li>
+                    <li><a href="notes/database-management/data-transformation.html">Data Transformation: Normalization, Discretization, Sampling</a></li>
+                    <li><a href="notes/database-management/data-warehouse-modelling.html">Data Warehouse Modelling</a></li>
+                    <li><a href="notes/database-management/multidimensional-schema-concept-hierarchies.html">Multidimensional Schema & Concept Hierarchies</a></li>
+                    <li><a href="notes/database-management/measures-categorization-computations.html">Measures: Categorization & Computations</a></li>
+                </ul>
+            </div>
+
+            <!-- 05. Machine Learning -->
+            <div class="foundation-category" data-category>
+                <h3>05. Machine Learning</h3>
+                <ul class="foundation-links">
+                    <li><a href="notes/machine-learning/regression-classification-overview.html">Regression & Classification Overview</a></li>
+                    <li><a href="notes/machine-learning/simple-multiple-linear-regression.html">Simple & Multiple Linear Regression</a></li>
+                    <li><a href="notes/machine-learning/ridge-logistic-regression.html">Ridge & Logistic Regression</a></li>
+                    <li><a href="notes/machine-learning/knn.html">K-Nearest Neighbour</a></li>
+                    <li><a href="notes/machine-learning/naive-bayes-classifier.html">Naive Bayes Classifier</a></li>
+                    <li><a href="notes/machine-learning/linear-discriminant-analysis.html">Linear Discriminant Analysis</a></li>
+                    <li><a href="notes/machine-learning/support-vector-machine.html">Support Vector Machine</a></li>
+                    <li><a href="notes/machine-learning/decision-trees.html">Decision Trees</a></li>
+                    <li><a href="notes/machine-learning/bias-variance-tradeoff.html">Bias-Variance Trade-off</a></li>
+                    <li><a href="notes/machine-learning/cross-validation-loo-kfold.html">Cross-Validation: LOO & K-Fold</a></li>
+                    <li><a href="notes/machine-learning/mlp-feedforward-neural-network.html">MLP & Feed-Forward Neural Network</a></li>
+                    <li><a href="notes/machine-learning/clustering-kmeans-kmedoid.html">Clustering: K-Means & K-Medoid</a></li>
+                    <li><a href="notes/machine-learning/hierarchical-clustering.html">Hierarchical Clustering</a></li>
+                    <li><a href="notes/machine-learning/dimensionality-reduction-pca.html">Dimensionality Reduction & PCA</a></li>
+                </ul>
+            </div>
+
+            <!-- 06. Python Programming -->
+            <div class="foundation-category" data-category>
+                <h3>06. Python Programming</h3>
+                <ul class="foundation-links">
+                    <li><a href="notes/python-programming/syntax-variables-datatypes.html">Syntax, Variables & Data Types</a></li>
+                    <li><a href="notes/python-programming/control-flow-loops.html">Control Flow & Loops</a></li>
+                    <li><a href="notes/python-programming/functions-lambda.html">Functions & Lambda</a></li>
+                    <li><a href="notes/python-programming/lists-tuples-sets-dicts.html">Lists, Tuples, Sets & Dictionaries</a></li>
+                    <li><a href="notes/python-programming/string-manipulation.html">String Manipulation</a></li>
+                    <li><a href="notes/python-programming/file-handling.html">File Handling</a></li>
+                    <li><a href="notes/python-programming/oop-classes-objects.html">OOP: Classes & Objects</a></li>
+                    <li><a href="notes/python-programming/inheritance-polymorphism.html">Inheritance & Polymorphism</a></li>
+                    <li><a href="notes/python-programming/exception-handling.html">Exception Handling</a></li>
+                    <li><a href="notes/python-programming/modules-packages.html">Modules & Packages</a></li>
+                    <li><a href="notes/python-programming/iterators-generators.html">Iterators & Generators</a></li>
+                    <li><a href="notes/python-programming/decorators.html">Decorators</a></li>
+                    <li><a href="notes/python-programming/comprehensions.html">List, Dict & Set Comprehensions</a></li>
+                    <li><a href="notes/python-programming/virtual-environments.html">Virtual Environments & pip</a></li>
+                </ul>
+            </div>
+
+            <!-- 07. Data Structures & Algorithms -->
+            <div class="foundation-category" data-category>
+                <h3>07. Data Structures & Algorithms</h3>
+                <ul class="foundation-links">
+                    <li><a href="notes/data-structures/arrays-strings.html">Arrays & Strings</a></li>
+                    <li><a href="notes/data-structures/linked-lists.html">Linked Lists</a></li>
+                    <li><a href="notes/data-structures/stacks-queues.html">Stacks & Queues</a></li>
+                    <li><a href="notes/data-structures/hash-tables.html">Hash Tables</a></li>
+                    <li><a href="notes/data-structures/trees-binary-trees.html">Trees & Binary Trees</a></li>
+                    <li><a href="notes/data-structures/bst-avl-trees.html">BST & AVL Trees</a></li>
+                    <li><a href="notes/data-structures/heaps-priority-queues.html">Heaps & Priority Queues</a></li>
+                    <li><a href="notes/data-structures/graphs-representation.html">Graphs: Representation</a></li>
+                    <li><a href="notes/data-structures/bfs-dfs.html">BFS & DFS</a></li>
+                    <li><a href="notes/data-structures/sorting-algorithms.html">Sorting Algorithms</a></li>
+                    <li><a href="notes/data-structures/searching-algorithms.html">Searching Algorithms</a></li>
+                    <li><a href="notes/data-structures/recursion-backtracking.html">Recursion & Backtracking</a></li>
+                    <li><a href="notes/data-structures/dynamic-programming.html">Dynamic Programming</a></li>
+                    <li><a href="notes/data-structures/greedy-algorithms.html">Greedy Algorithms</a></li>
+                    <li><a href="notes/data-structures/time-space-complexity.html">Time & Space Complexity</a></li>
+                </ul>
+            </div>
+
+            <!-- 08. Python Libraries -->
+            <div class="foundation-category" data-category>
+                <h3>08. Python Libraries</h3>
+                <ul class="foundation-links">
+                    <li><a href="notes/python-libraries/numpy.html">NumPy</a></li>
+                    <li><a href="notes/python-libraries/pandas.html">Pandas</a></li>
+                    <li><a href="notes/python-libraries/matplotlib.html">Matplotlib</a></li>
+                    <li><a href="notes/python-libraries/seaborn.html">Seaborn</a></li>
+                    <li><a href="notes/python-libraries/scikit-learn.html">Scikit-learn</a></li>
+                    <li><a href="notes/python-libraries/scipy.html">SciPy</a></li>
+                    <li><a href="notes/python-libraries/statsmodels.html">Statsmodels</a></li>
+                    <li><a href="notes/python-libraries/tensorflow.html">TensorFlow</a></li>
+                    <li><a href="notes/python-libraries/keras.html">Keras</a></li>
+                    <li><a href="notes/python-libraries/pytorch.html">PyTorch</a></li>
+                    <li><a href="notes/python-libraries/xgboost.html">XGBoost</a></li>
+                    <li><a href="notes/python-libraries/lightgbm.html">LightGBM</a></li>
+                </ul>
+            </div>
+
+        </div>
+
     </div>
+
+    <script src="js/scripts.js"></script>
 </body>
 </html>

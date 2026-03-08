@@ -150,6 +150,94 @@ footer {
     overflow-x: auto;
 }
 
+/* Page Credit */
+.page-credit {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 13px;
+    font-style: italic;
+}
+
+.page-credit a {
+    color: #000;
+}
+
+
+/* =============================================
+   Announcement Banner
+   ============================================= */
+#announcement-banner {
+    width: 100%;
+    background-color: #fff;
+    color: #000;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 14px;
+    transform: translateY(-100%);
+    transition: transform 0.4s ease;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    border-bottom: 2px solid #000;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+
+#announcement-banner.banner-visible {
+    transform: translateY(0);
+}
+
+#announcement-banner.banner-hidden {
+    transform: translateY(-100%);
+}
+
+.banner-inner {
+    max-width: 850px;
+    margin: 0 auto;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.banner-text {
+    flex: 1;
+    line-height: 1.5;
+}
+
+.banner-link {
+    color: #000;
+    text-decoration: underline;
+    font-weight: bold;
+    margin: 0 4px;
+}
+
+.banner-link:hover {
+    color: #555;
+}
+
+.banner-close {
+    background: none;
+    border: 1px solid #000;
+    color: #000;
+    font-size: 12px;
+    cursor: pointer;
+    padding: 2px 7px;
+    font-family: "Times New Roman", Times, serif;
+    flex-shrink: 0;
+}
+
+.banner-close:hover {
+    background: #000;
+    color: #fff;
+}
+
+@media (max-width: 700px) {
+    .banner-inner {
+        padding: 10px 15px;
+        font-size: 13px;
+    }
+}
+
 /* =============================================
    Search Bar
    ============================================= */
@@ -206,6 +294,40 @@ footer {
 a.search-highlight {
     background: #f0f0a8;
     padding: 1px 2px;
+}
+
+/* =============================================
+   Notes Table
+   ============================================= */
+.notes-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 15px;
+}
+
+.notes-table th,
+.notes-table td {
+    border: 1px solid #000;
+    padding: 9px 12px;
+    text-align: left;
+    vertical-align: top;
+}
+
+.notes-table thead tr {
+    background-color: #000;
+    color: #fff;
+}
+
+.notes-table tbody tr:nth-child(even) {
+    background-color: #f7f7f7;
+}
+
+@media (max-width: 700px) {
+    .notes-table {
+        display: block;
+        overflow-x: auto;
+    }
 }
 
 /* =============================================

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deep Dive | Customer Churn Prediction</title>
+    <title>Customer Churn Prediction | Project Deep Dive</title>
     <link rel="stylesheet" href="../css/style.css">
     <style>
         .problem-box { border-left: 2px solid #000; padding-left: 15px; margin: 15px 0; font-style: italic; }
@@ -20,29 +20,273 @@
         <header>
             <div class="details-left">
                 <h1>Customer Churn Prediction</h1>
-                <div class="info-item"><strong>Objective:</strong> 95% Accuracy on CIFAR-10 with noise.</div>
-                <div class="info-item"><strong>Tech:</strong> PyTorch, OpenCV, Docker.</div>
-                
+                <div class="info-item"><strong>Objective:</strong> Predict telecom customer churn with XGBoost + SHAP explainability, deployed as a live API and dashboard.</div>
+                <div class="info-item"><strong>Stack:</strong> Python · XGBoost · FastAPI · Streamlit · Docker · HuggingFace</div>
+                <div class="info-item"><strong>Dataset:</strong> IBM Telco Customer Churn — 7,043 customers, 21 features</div>
+                <div class="info-item"><strong>Result:</strong> 0.85+ AUC-ROC · End-to-end deployed on HuggingFace Spaces</div>
+
                 <div class="project-links-header">
-                    <a href="https://github.com/repo" class="btn">Source Code</a>
-                    <a href="https://demo.com" class="btn">Live Demo</a>
-                    <a href="https://linkedin.com/post" class="btn">LinkedIn Post</a>
+                    <a href="https://github.com/biswapulan/churn-prediction" class="btn">Source Code</a>
+                    <a href="https://biswapulan-churn-prediction-dashboard.hf.space" class="btn">Live Dashboard</a>
+                    <a href="https://biswapulan-churn-prediction-api.hf.space/docs" class="btn">API Docs</a>
+                    <a href="https://huggingface.co/spaces/biswapulan/churn-prediction-api" class="btn">HF API Space</a>
+                    <a href="https://huggingface.co/spaces/biswapulan/churn-prediction-dashboard" class="btn">HF Dashboard Space</a>
                 </div>
             </div>
         </header>
 
-        <section>
-            <h2>The Technical Flow</h2>
-            <p>
-                This project focuses on the transition from a standard ResNet architecture to 
-                a customized lightweight model for mobile deployment.
-            </p>
-            <div class="problem-box">
-                "The primary hurdle was a 40ms latency bottleneck. I implemented weight pruning 
-                and switched to half-precision (FP16) to solve this."
-            </div>
-        </section>
 
+        <h2>Project Overview</h2>
+        <p>Customer churn prediction is a classic binary classification problem in the telecom domain. The goal is to predict whether a customer will stop using a service (churn = 1) or continue (churn = 0) based on their usage patterns, demographics, and subscription details.</p>
+
+        <div class="problem-box">
+            "It costs 5–25x more to acquire a new customer than to retain an existing one. Even a 5% reduction in churn can increase profits by 25–95%. Every prediction in this project comes with a SHAP explanation so business teams understand WHY a customer is at risk."
         </div>
+
+        <p><strong>Dataset:</strong> IBM Telco Customer Churn (Kaggle) — 7,043 customers, 21 features. Target distribution: 73.5% Stay, 26.5% Churn — class imbalanced. Features include 3 numerical (tenure, MonthlyCharges, TotalCharges) and 16 categorical (Contract, PaymentMethod, InternetService, etc.).</p>
+
+
+        <h2>Phase 1 — Exploratory Data Analysis</h2>
+        <p>EDA is the process of understanding data before modelling — exploring patterns, distributions, correlations, and anomalies.</p>
+
+        <p><strong>Key steps:</strong> Loaded dataset with pandas, checked shape/dtypes/missing values. Found TotalCharges was stored as string due to 11 blank entries — converted using <code>pd.to_numeric(errors='coerce')</code>. Visualized churn distribution and plotted distributions for all features.</p>
+
+        <p><strong>Key findings from EDA:</strong></p>
+        <ul>
+            <li>Low tenure customers churn more — newer customers are less loyal.</li>
+            <li>High MonthlyCharges customers churn more — price sensitivity.</li>
+            <li>Month-to-month contracts had ~43% churn vs ~11% for one-year and ~3% for two-year contracts.</li>
+            <li>Fiber optic internet users churned more than DSL users.</li>
+            <li>Customers without TechSupport or OnlineSecurity churned significantly more.</li>
+            <li>Senior citizens churned more than non-senior citizens.</li>
+        </ul>
+
+
+        <h2>Phase 2 — Data Preprocessing</h2>
+        <p>Preprocessing converts raw data into a format ML models can understand. Models can't work with strings or missing values — everything must be numerical and clean.</p>
+
+        <p><strong>Pipeline steps:</strong> Removed customerID (no predictive power). Fixed TotalCharges. Encoded target (Yes → 1, No → 0). Train/Test split 80/20 with stratify=y. Built a ColumnTransformer: StandardScaler for numerical, OneHotEncoder for categorical. Applied SMOTE only on training data to handle class imbalance.</p>
+
+        <table class="notes-table">
+            <thead>
+                <tr>
+                    <th>Technique</th>
+                    <th>What It Does</th>
+                    <th>Why Used Here</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>StandardScaler</td>
+                    <td>Normalizes features to mean=0, std=1</td>
+                    <td>Prevents TotalCharges from dominating the model</td>
+                </tr>
+                <tr>
+                    <td>OneHotEncoder</td>
+                    <td>Converts categories to binary columns</td>
+                    <td>ML models need numbers, not strings</td>
+                </tr>
+                <tr>
+                    <td>SMOTE</td>
+                    <td>Creates synthetic minority class examples</td>
+                    <td>Balances 4,100 Stay vs 1,400 Churn → 4,100 vs 4,100</td>
+                </tr>
+                <tr>
+                    <td>Pipeline</td>
+                    <td>Bundles preprocessing + model together</td>
+                    <td>Ensures same transformations in training and production</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="problem-box">
+            "SMOTE is applied ONLY on training data — never on test data. Applying SMOTE to test data causes data leakage, where the model 'sees' test data during training and reports fake accuracy."
+        </div>
+
+
+        <h2>Phase 3 — Model Training & Selection</h2>
+        <p>Four models were trained and compared. XGBoost was selected as the final model based on AUC-ROC performance.</p>
+
+        <table class="notes-table">
+            <thead>
+                <tr>
+                    <th>Model</th>
+                    <th>Characteristics</th>
+                    <th>Role in Project</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Logistic Regression</td>
+                    <td>Simple, interpretable, fast</td>
+                    <td>Baseline</td>
+                </tr>
+                <tr>
+                    <td>Random Forest</td>
+                    <td>Ensemble of trees, handles non-linearity</td>
+                    <td>Comparison</td>
+                </tr>
+                <tr>
+                    <td>XGBoost</td>
+                    <td>Gradient boosted trees, regularization, handles missing values</td>
+                    <td>Final model (best AUC)</td>
+                </tr>
+                <tr>
+                    <td>LightGBM</td>
+                    <td>Faster than XGBoost, histogram-based</td>
+                    <td>Comparison</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p><strong>Hyperparameter tuning with Optuna:</strong> 50 trials using Bayesian optimization, optimizing for AUC-ROC via cross-validation. Parameters tuned: n_estimators, max_depth, learning_rate, subsample, colsample_bytree, reg_alpha, reg_lambda. All experiments tracked with MLflow.</p>
+
+        <p><strong>Why AUC-ROC and not accuracy?</strong> With 73.5% non-churners, a model that predicts "never churn" achieves 73.5% accuracy but is completely useless. AUC-ROC measures the model's ability to rank churners above non-churners regardless of threshold. Our model achieved 0.85+ AUC-ROC.</p>
+
+
+        <h2>Phase 4 — SHAP Explainability</h2>
+        <p>SHAP (SHapley Additive exPlanations) explains WHY the model made a specific prediction. It assigns an importance value to each feature for each individual prediction, grounded in game theory (Shapley values).</p>
+
+        <p><strong>How SHAP values work:</strong> A positive SHAP value pushes the prediction toward Churn. A negative SHAP value pushes toward No Churn. The sum of all SHAP values plus the base value equals the final prediction score.</p>
+
+        <p><strong>Visualizations created:</strong></p>
+        <ul>
+            <li><strong>Summary Plot:</strong> All features ranked by global importance across all predictions.</li>
+            <li><strong>Bar Plot:</strong> Mean absolute SHAP values per feature.</li>
+            <li><strong>Waterfall Plot:</strong> Step-by-step explanation for one individual customer's prediction.</li>
+            <li><strong>Dependence Plot:</strong> How one feature's SHAP value changes across different values of that feature.</li>
+        </ul>
+
+        <p><strong>Key SHAP findings:</strong> Low tenure is the strongest predictor of churn. High MonthlyCharges increases churn risk. Month-to-month contract is a strong churn indicator. Absence of TechSupport or OnlineSecurity significantly increases churn risk.</p>
+
+
+        <h2>Phase 5 — FastAPI Backend</h2>
+        <p>FastAPI is a modern Python web framework for building REST APIs. The ML model lives in the API — the dashboard sends customer data and receives predictions back. This separation allows the model to be used by any frontend.</p>
+
+        <table class="notes-table">
+            <thead>
+                <tr>
+                    <th>Endpoint</th>
+                    <th>Method</th>
+                    <th>Purpose</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>/health</td>
+                    <td>GET</td>
+                    <td>Returns API status — used for monitoring</td>
+                </tr>
+                <tr>
+                    <td>/</td>
+                    <td>GET</td>
+                    <td>Root endpoint, confirms API is running</td>
+                </tr>
+                <tr>
+                    <td>/predict</td>
+                    <td>POST</td>
+                    <td>Single customer prediction + SHAP explanation</td>
+                </tr>
+                <tr>
+                    <td>/predict/batch</td>
+                    <td>POST</td>
+                    <td>Batch predictions for multiple customers</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="problem-box">
+            "Critical bug fixed: the model was loaded BEFORE the FastAPI app was created. HuggingFace's health check hit /health immediately on startup, but the app wasn't ready yet, causing a timeout crash. Fix: create app = FastAPI() first, register /health second, then load the model third."
+        </div>
+
+
+        <h2>Phase 6 — Streamlit Dashboard</h2>
+        <p>Streamlit is a Python library for building interactive web apps without writing HTML/CSS/JavaScript. Three pages were built: a Home overview, a Single Prediction form (19 customer features → churn probability + SHAP), and a Batch Prediction page (CSV upload → download results).</p>
+
+        <p><strong>How the dashboard talks to the API:</strong> User fills form → app.py sends POST request to FastAPI → FastAPI returns JSON → app.py displays result. The dashboard requires no ML libraries — all ML work happens in the API.</p>
+
+        <p><strong>Environment fix:</strong> Local machine uses <code>http://127.0.0.1:8000</code>, HuggingFace uses the live URL. <code>os.getenv()</code> was used so the URL can be set via environment variable without changing code.</p>
+
+
+        <h2>Phase 7 — Docker & Deployment</h2>
+        <p>Docker packages the application and all dependencies into a container — a portable, self-contained unit that runs the same everywhere. Each HuggingFace Space is a Git repository: push code and it automatically builds and deploys.</p>
+
+        <p><strong>HuggingFace Spaces specs:</strong> Free tier offers 512MB RAM, 0.1 CPU. Port 7860 is the only exposed port. Spaces sleep after 48h inactivity and wake on visit (1–2 min cold start).</p>
+
+        <p><strong>Key Docker issues resolved:</strong></p>
+        <ul>
+            <li>Typo <code>--upgrad</code> instead of <code>--upgrade</code> in pip command caused build failure.</li>
+            <li>numpy version conflict — shap 0.51.0 needs numpy≥2 but streamlit 1.32.0 needs numpy&lt;2. Fixed by upgrading to streamlit 1.45+.</li>
+            <li>Port mismatch — HuggingFace only exposes port 7860, API was on 8000.</li>
+            <li>scikit-learn version mismatch between training (1.8.0) and Docker (1.3.2). Fixed by pinning version in requirements.</li>
+        </ul>
+
+
+        <h2>Problems Faced & Solutions</h2>
+        <table class="notes-table">
+            <thead>
+                <tr>
+                    <th>Problem</th>
+                    <th>Cause</th>
+                    <th>Fix</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Streamlit blank screen</td>
+                    <td>Python 3.14 incompatibility</td>
+                    <td>Downgraded to Python 3.11.9</td>
+                </tr>
+                <tr>
+                    <td>Windows path errors</td>
+                    <td>Hardcoded Windows paths broke on other OS</td>
+                    <td>Used pathlib.Path throughout</td>
+                </tr>
+                <tr>
+                    <td>Git push 403</td>
+                    <td>GitHub no longer accepts passwords</td>
+                    <td>Used Personal Access Token (PAT)</td>
+                </tr>
+                <tr>
+                    <td>HF push rejected</td>
+                    <td>Binary files (.png, .pkl) too large for HF git</td>
+                    <td>Used git filter-branch to remove history</td>
+                </tr>
+                <tr>
+                    <td>numpy conflict</td>
+                    <td>shap needs numpy≥2, streamlit 1.32 needs numpy&lt;2</td>
+                    <td>Upgraded to streamlit 1.45+</td>
+                </tr>
+                <tr>
+                    <td>scikit-learn mismatch</td>
+                    <td>Model trained on 1.8.0, Docker installed 1.3.2</td>
+                    <td>Pinned scikit-learn==1.8.0 in requirements</td>
+                </tr>
+                <tr>
+                    <td>API timeout on HF</td>
+                    <td>Model loaded before FastAPI app was created</td>
+                    <td>Moved app = FastAPI() to top of main.py</td>
+                </tr>
+                <tr>
+                    <td>Port blocked on HF</td>
+                    <td>API ran on 8000, HF only exposes 7860</td>
+                    <td>Changed port to 7860 in Dockerfile CMD</td>
+                </tr>
+            </tbody>
+        </table>
+
+
+        <footer>
+            <a href="https://github.com/biswapulan/churn-prediction" class="btn">Source Code</a>
+            <a href="https://biswapulan-churn-prediction-dashboard.hf.space" class="btn">Live Dashboard</a>
+            <a href="https://www.linkedin.com/in/biswajit-pradhan-ab66971b9/" class="btn">LinkedIn Post</a>
+            <a href="../index.html" class="btn">Home</a>
+        </footer>
+
+        <p class="page-credit">
+            Designed and crafted with ❤️ by <a href="../index.html">Biswajit Pradhan</a>
+        </p>
+
+    </div>
 </body>
 </html>
